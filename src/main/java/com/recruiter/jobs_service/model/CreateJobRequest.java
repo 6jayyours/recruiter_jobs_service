@@ -41,4 +41,6 @@ public class CreateJobRequest {
     private String requirements;
 
     private String responsibilities;
+
+    private String posted;
 }

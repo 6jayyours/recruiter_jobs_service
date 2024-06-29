@@ -59,6 +59,9 @@ public class Jobs {
     @Column(name = "user")
     private Integer user;
 
+    @Column(name = "posted")
+    private String posted;
+
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 

@@ -1,7 +1,9 @@
 package com.recruiter.jobs_service.service;
 
+import com.recruiter.jobs_service.feign.AuthClient;
 import com.recruiter.jobs_service.model.CreateJobRequest;
 import com.recruiter.jobs_service.model.Jobs;
+import com.recruiter.jobs_service.model.UserDTO;
 import com.recruiter.jobs_service.repository.JobsRepository;
 import org.springframework.stereotype.Service;
 
@@ -12,14 +14,18 @@ import java.util.List;
 public class JobsService {
     private final JobsRepository jobsRepository;
 
-    public JobsService(JobsRepository jobsRepository) {
+    private final AuthClient authClient;
+
+    public JobsService(JobsRepository jobsRepository, AuthClient authClient) {
         this.jobsRepository = jobsRepository;
+        this.authClient = authClient;
     }
 
     public String create(CreateJobRequest request) {
-        System.out.println(request);
+
         Jobs jobs = new Jobs();
         try {
+            UserDTO user = authClient.getUserById(Integer.valueOf(request.getUser())).getBody();
             jobs.setJobTitle(request.getJobTitle());
             jobs.setJobCategory(request.getJobCategory());
             jobs.setJobType(request.getJobType());
@@ -35,6 +41,7 @@ public class JobsService {
             jobs.setCompany(request.getCompany());
             jobs.setPostedTime(LocalDateTime.now());
             jobs.setUser(request.getUser());
+            jobs.setPosted(user.getFirstName()+" "+user.getLastName());
             jobs.setDescription(request.getDescription());
             jobs.setRequirements(request.getRequirements());
             jobs.setResponsibilities(request.getResponsibilities());
