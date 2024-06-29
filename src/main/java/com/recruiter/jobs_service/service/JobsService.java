@@ -17,6 +17,7 @@ public class JobsService {
     }
 
     public String create(CreateJobRequest request) {
+        System.out.println(request);
         Jobs jobs = new Jobs();
         try {
             jobs.setJobTitle(request.getJobTitle());
@@ -33,7 +34,7 @@ public class JobsService {
             jobs.setPincode(request.getPincode());
             jobs.setCompany(request.getCompany());
             jobs.setPostedTime(LocalDateTime.now());
-            jobs.setUser(request.getUserId());
+            jobs.setUser(request.getUser());
             jobs.setDescription(request.getDescription());
             jobs.setRequirements(request.getRequirements());
             jobs.setResponsibilities(request.getResponsibilities());

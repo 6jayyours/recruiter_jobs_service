@@ -28,8 +28,5 @@ public class JobsController {
         return ResponseEntity.ok(jobsService.findJobsByUserId(user));
     }
 
-    @GetMapping("/getAllJobs")
-    public ResponseEntity<List<Jobs>> getAllJobs() {
-        return ResponseEntity.ok(jobsService.findAllJobs());
-    }
+
 }

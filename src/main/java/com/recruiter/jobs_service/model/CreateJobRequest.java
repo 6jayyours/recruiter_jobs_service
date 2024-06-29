@@ -34,7 +34,7 @@ public class CreateJobRequest {
 
     private LocalDateTime postedTime;
 
-    private Integer userId;
+    private Integer user;
 
     private String description;
 
