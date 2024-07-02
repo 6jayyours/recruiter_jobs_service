@@ -33,5 +33,10 @@ public class JobsController {
         return ResponseEntity.ok(jobsService.findAllJobs());
     }
 
+    @GetMapping("/getJob")
+    public ResponseEntity<Jobs> getJob(@RequestParam Integer id) {
+        return ResponseEntity.ok(jobsService.findJobById(id));
+    }
+
 
 }

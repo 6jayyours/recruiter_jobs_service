@@ -78,4 +78,14 @@ public class JobsService {
             throw new RuntimeException("Failed to find jobs");
         }
     }
+
+    public Jobs findJobById(Integer id) {
+        try {
+            Jobs job = jobsRepository.findById(id).orElseThrow();
+            return job;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed to find job");
+        }
+    }
 }
