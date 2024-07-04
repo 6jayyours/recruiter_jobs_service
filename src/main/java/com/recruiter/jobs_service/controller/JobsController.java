@@ -2,9 +2,11 @@ package com.recruiter.jobs_service.controller;
 
 import com.recruiter.jobs_service.model.CreateJobRequest;
 import com.recruiter.jobs_service.model.Jobs;
+import com.recruiter.jobs_service.service.ApplicationsService;
 import com.recruiter.jobs_service.service.JobsService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -13,9 +15,11 @@ import java.util.List;
 public class JobsController {
 
     private final JobsService jobsService;
+    private final ApplicationsService applicationsService;
 
-    public JobsController(JobsService jobsService) {
+    public JobsController(JobsService jobsService, ApplicationsService applicationsService) {
         this.jobsService = jobsService;
+        this.applicationsService = applicationsService;
     }
 
     @PostMapping("/postjob")
@@ -36,6 +40,17 @@ public class JobsController {
     @GetMapping("/getJob")
     public ResponseEntity<Jobs> getJob(@RequestParam Integer id) {
         return ResponseEntity.ok(jobsService.findJobById(id));
+    }
+
+
+    @PostMapping("/apply")
+    public ResponseEntity<String> applyForJob(@RequestParam("resume") MultipartFile resumeFile,
+                                              @RequestParam("userId") Integer userId,
+                                              @RequestParam("jobId") Integer jobId) {
+        System.out.println(userId);
+        System.out.println(resumeFile);
+        System.out.println(jobId);
+        return ResponseEntity.ok(applicationsService.applyJob(resumeFile, userId, jobId));
     }
 
 
