@@ -45,6 +45,7 @@ public class JobsService {
             jobs.setDescription(request.getDescription());
             jobs.setRequirements(request.getRequirements());
             jobs.setResponsibilities(request.getResponsibilities());
+            jobs.setStatus("open");
             jobsRepository.save(jobs);
             // Persist or process the 'jobs' entity further (e.g., save to database)
 

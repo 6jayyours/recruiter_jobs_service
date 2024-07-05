@@ -54,9 +54,11 @@ public class JobsController {
         return ResponseEntity.ok(applicationsService.applyJob(resumeFile, userId, jobId));
     }
 
-    @GetMapping("/getMyApps")
-    public ResponseEntity<List<Applications>> getMyApps(@RequestParam Integer postedId) {
-        return ResponseEntity.ok(applicationsService.findByPostedId(postedId));
+
+
+    @GetMapping("/getAllApps")
+    public ResponseEntity<List<Applications>> getAllApps() {
+        return ResponseEntity.ok(applicationsService.findAllApps());
     }
 
 }

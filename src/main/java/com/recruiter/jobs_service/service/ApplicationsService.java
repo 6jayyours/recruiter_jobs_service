@@ -47,7 +47,7 @@ public class ApplicationsService {
             application.setPostedBy(recruiter.getFirstName()+" "+recruiter.getLastName());
             application.setDownloadUrl(url);
             application.setPostedId(recruiter.getId());
-            application.setStatus("pending");
+            application.setStatus("open");
             applicationsRepository.save(application);
             return "Application submitted successfully.";
         }catch (Exception e) {
@@ -59,5 +59,26 @@ public class ApplicationsService {
     public List<Applications> findByPostedId(Integer postedId) {
         List<Applications> applications = applicationsRepository.findByPostedId(postedId);
         return applications;
+    }
+
+    public List<Applications> findAllApps() {
+        try {
+            List<Applications> apps = applicationsRepository.findAll();
+            return apps;
+        }catch (Exception e) {
+            // Handle any specific exceptions or log the error
+            e.printStackTrace();
+            throw new RuntimeException("Failed to find Applications");
+        }
+    }
+    public List<Jobs> findAllJobs() {
+        try {
+            List<Jobs> jobs = jobsRepository.findAll();
+            return jobs;
+        } catch (Exception e) {
+            // Handle any specific exceptions or log the error
+            e.printStackTrace();
+            throw new RuntimeException("Failed to find jobs");
+        }
     }
 }

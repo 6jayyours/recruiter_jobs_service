@@ -62,6 +62,9 @@ public class Jobs {
     @Column(name = "posted")
     private String posted;
 
+    @Column(name = "status")
+    private String status;
+
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
