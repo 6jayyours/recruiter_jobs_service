@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class ApplicationsService {
@@ -35,8 +36,9 @@ public class ApplicationsService {
         try {
             String url = storageService.uploadVerificationDoc(resumeFile);
             UserDTO applicant = authClient.getUserById(userId).getBody();
-            UserDTO recruiter = authClient.getUserById(userId).getBody();
             Jobs jobs = jobsRepository.findById(jobId).orElseThrow();
+            Integer id = jobs.getUser();
+            UserDTO recruiter = authClient.getUserById(id).getBody();
             Applications application = new Applications();
             application.setJobId(jobId);
             application.setApplicant(applicant.getFirstName()+" "+applicant.getLastName());
@@ -44,6 +46,7 @@ public class ApplicationsService {
             application.setJobTitle(jobs.getJobTitle());
             application.setPostedBy(recruiter.getFirstName()+" "+recruiter.getLastName());
             application.setDownloadUrl(url);
+            application.setPostedId(recruiter.getId());
             application.setStatus("pending");
             applicationsRepository.save(application);
             return "Application submitted successfully.";
@@ -52,4 +55,9 @@ public class ApplicationsService {
         }
     }
 
+
+    public List<Applications> findByPostedId(Integer postedId) {
+        List<Applications> applications = applicationsRepository.findByPostedId(postedId);
+        return applications;
+    }
 }

@@ -1,5 +1,6 @@
 package com.recruiter.jobs_service.controller;
 
+import com.recruiter.jobs_service.model.Applications;
 import com.recruiter.jobs_service.model.CreateJobRequest;
 import com.recruiter.jobs_service.model.Jobs;
 import com.recruiter.jobs_service.service.ApplicationsService;
@@ -53,5 +54,9 @@ public class JobsController {
         return ResponseEntity.ok(applicationsService.applyJob(resumeFile, userId, jobId));
     }
 
+    @GetMapping("/getMyApps")
+    public ResponseEntity<List<Applications>> getMyApps(@RequestParam Integer postedId) {
+        return ResponseEntity.ok(applicationsService.findByPostedId(postedId));
+    }
 
 }

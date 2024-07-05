@@ -20,4 +20,5 @@ public class Applications {
     private String jobTitle;
     private String resumeFileName;
     private String downloadUrl;
+    private Integer postedId;
 }
