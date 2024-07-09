@@ -21,5 +21,5 @@ public class Applications {
     private String resumeFileName;
     private String downloadUrl;
     private Integer postedId;
-    private Integer AppliedBy;
+    private Integer appliedBy;
 }
