@@ -49,6 +49,7 @@ public class ApplicationsService {
             application.setPostedId(recruiter.getId());
             application.setStatus("open");
             application.setAppliedBy(userId);
+            application.setAction("applied");
             applicationsRepository.save(application);
             return "Application submitted successfully.";
         }catch (Exception e) {

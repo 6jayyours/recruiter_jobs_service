@@ -22,4 +22,5 @@ public class Applications {
     private String downloadUrl;
     private Integer postedId;
     private Integer appliedBy;
+    private String action;
 }
