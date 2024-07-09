@@ -48,9 +48,7 @@ public class JobsController {
     public ResponseEntity<String> applyForJob(@RequestParam("resume") MultipartFile resumeFile,
                                               @RequestParam("userId") Integer userId,
                                               @RequestParam("jobId") Integer jobId) {
-        System.out.println(userId);
-        System.out.println(resumeFile);
-        System.out.println(jobId);
+
         return ResponseEntity.ok(applicationsService.applyJob(resumeFile, userId, jobId));
     }
 
@@ -59,6 +57,11 @@ public class JobsController {
     @GetMapping("/getAllApps")
     public ResponseEntity<List<Applications>> getAllApps() {
         return ResponseEntity.ok(applicationsService.findAllApps());
+    }
+
+    @GetMapping("/getMyApps")
+    public ResponseEntity<List<Applications>> getMyApps(Integer id) {
+        return ResponseEntity.ok(applicationsService.findApplicationsByAppliedBy(id));
     }
 
 }

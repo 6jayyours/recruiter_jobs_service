@@ -48,6 +48,7 @@ public class ApplicationsService {
             application.setDownloadUrl(url);
             application.setPostedId(recruiter.getId());
             application.setStatus("open");
+            application.setAppliedBy(userId);
             applicationsRepository.save(application);
             return "Application submitted successfully.";
         }catch (Exception e) {
@@ -80,5 +81,9 @@ public class ApplicationsService {
             e.printStackTrace();
             throw new RuntimeException("Failed to find jobs");
         }
+    }
+
+    public List<Applications> findApplicationsByAppliedBy(Integer appliedBy) {
+        return applicationsRepository.findByAppliedBy(appliedBy);
     }
 }

@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface ApplicationsRepository extends JpaRepository<Applications, Integer> {
     List<Applications> findByPostedId(Integer postedId);
+
+    List<Applications> findByAppliedBy(Integer appliedBy);
 }
