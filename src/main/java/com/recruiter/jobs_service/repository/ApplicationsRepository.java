@@ -11,4 +11,6 @@ public interface ApplicationsRepository extends JpaRepository<Applications, Inte
     List<Applications> findByPostedId(Integer postedId);
 
     List<Applications> findByAppliedBy(Integer appliedBy);
+
+    List<Applications> findByJobId(Integer id);
 }

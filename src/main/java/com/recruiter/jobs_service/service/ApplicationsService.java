@@ -87,4 +87,22 @@ public class ApplicationsService {
     public List<Applications> findApplicationsByAppliedBy(Integer appliedBy) {
         return applicationsRepository.findByAppliedBy(appliedBy);
     }
+
+    public String updateStatus(Integer applicationId, String status) {
+        try {
+            Applications app = applicationsRepository.findById(applicationId)
+                    .orElseThrow(() -> new RuntimeException("Application not found for id: " + applicationId));
+            app.setStatus(status);
+            System.out.println(status);
+            applicationsRepository.save(app);
+            return "Status Changed";
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed to update status");
+        }
+    }
+
+    public List<Applications> findByJob(Integer id) {
+        return applicationsRepository.findByJobId(id);
+    }
 }

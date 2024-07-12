@@ -3,6 +3,7 @@ package com.recruiter.jobs_service.controller;
 import com.recruiter.jobs_service.model.Applications;
 import com.recruiter.jobs_service.model.CreateJobRequest;
 import com.recruiter.jobs_service.model.Jobs;
+import com.recruiter.jobs_service.model.UpdateStatusRequest;
 import com.recruiter.jobs_service.service.ApplicationsService;
 import com.recruiter.jobs_service.service.JobsService;
 import org.springframework.http.ResponseEntity;
@@ -63,5 +64,29 @@ public class JobsController {
     public ResponseEntity<List<Applications>> getMyApps(Integer id) {
         return ResponseEntity.ok(applicationsService.findApplicationsByAppliedBy(id));
     }
+
+    @GetMapping("/getMyJobApps")
+    public ResponseEntity<List<Applications>> getMyJobApps(Integer id) {
+        return ResponseEntity.ok(applicationsService.findByPostedId(id));
+    }
+
+    @GetMapping("/getSingleJobApps")
+    public ResponseEntity<List<Applications>> getSingleJobApps(Integer id) {
+        return ResponseEntity.ok(applicationsService.findByJob(id));
+    }
+
+    @PostMapping("/updateStatus")
+    public ResponseEntity<String> updateApplicationStatus(@RequestBody UpdateStatusRequest request) {
+
+        Integer applicationId = request.getApplicationId();
+        String status = request.getStatus();
+        System.out.println(applicationId+status);
+        String updatedStatus = applicationsService.updateStatus(applicationId, status);
+
+        return ResponseEntity.ok(updatedStatus);
+    }
+
+
+
 
 }

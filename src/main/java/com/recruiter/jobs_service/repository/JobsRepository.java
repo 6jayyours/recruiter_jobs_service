@@ -11,5 +11,5 @@ public interface JobsRepository extends JpaRepository<Jobs, Integer> {
 
     List<Jobs> findByUser(Integer user);
 
-    List<Jobs> findByStatus(String status);
+    List<Jobs> findByStatus(String open);
 }
