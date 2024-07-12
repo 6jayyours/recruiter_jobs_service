@@ -71,7 +71,7 @@ public class JobsService {
 
     public List<Jobs> findAllJobs() {
         try {
-            List<Jobs> jobs = jobsRepository.findAll();
+            List<Jobs> jobs = jobsRepository.findByStatus("open");
             return jobs;
         } catch (Exception e) {
             // Handle any specific exceptions or log the error
