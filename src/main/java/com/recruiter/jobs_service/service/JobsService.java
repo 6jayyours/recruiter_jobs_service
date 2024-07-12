@@ -89,4 +89,28 @@ public class JobsService {
             throw new RuntimeException("Failed to find job");
         }
     }
+
+    public String blockJob(Integer userId) {
+        List<Jobs> jobs = jobsRepository.findByUser(userId);
+        for (Jobs job : jobs) {
+            if ("open".equals(job.getStatus())) {
+                job.setStatus("closed");
+            } else  {
+                job.setStatus("open");
+            }
+            jobsRepository.save(job);  // This saves each job individually.
+        }
+        return "Success";
+    }
+
+    public List<Jobs> findAllJobsAdmin() {
+        try {
+            List<Jobs> jobs = jobsRepository.findAll();
+            return jobs;
+        } catch (Exception e) {
+            // Handle any specific exceptions or log the error
+            e.printStackTrace();
+            throw new RuntimeException("Failed to find jobs");
+        }
+    }
 }

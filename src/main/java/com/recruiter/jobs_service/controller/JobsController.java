@@ -39,6 +39,11 @@ public class JobsController {
         return ResponseEntity.ok(jobsService.findAllJobs());
     }
 
+    @GetMapping("/getAllJobsAdmin")
+    public ResponseEntity<List<Jobs>> getAllJobsAdmin() {
+        return ResponseEntity.ok(jobsService.findAllJobsAdmin());
+    }
+
     @GetMapping("/getJob")
     public ResponseEntity<Jobs> getJob(@RequestParam Integer id) {
         return ResponseEntity.ok(jobsService.findJobById(id));
@@ -86,7 +91,10 @@ public class JobsController {
         return ResponseEntity.ok(updatedStatus);
     }
 
-
+    @PostMapping("/blockJob")
+    public ResponseEntity<String> blockJob(@RequestParam Integer id) {
+        return ResponseEntity.ok(jobsService.blockJob(id));
+    }
 
 
 }
