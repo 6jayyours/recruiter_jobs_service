@@ -93,7 +93,7 @@ public class ApplicationsService {
             Applications app = applicationsRepository.findById(applicationId)
                     .orElseThrow(() -> new RuntimeException("Application not found for id: " + applicationId));
             app.setStatus(status);
-            System.out.println(status);
+            app.setAction("responded");
             applicationsRepository.save(app);
             return "Status Changed";
         } catch (Exception e) {
@@ -104,5 +104,9 @@ public class ApplicationsService {
 
     public List<Applications> findByJob(Integer id) {
         return applicationsRepository.findByJobId(id);
+    }
+
+    public boolean checkIfApplicationExists(Integer jobId, Integer appliedBy) {
+        return applicationsRepository.existsByJobIdAndUserId(jobId, appliedBy);
     }
 }

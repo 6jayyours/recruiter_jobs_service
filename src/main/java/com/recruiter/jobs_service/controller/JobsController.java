@@ -49,12 +49,10 @@ public class JobsController {
         return ResponseEntity.ok(jobsService.findJobById(id));
     }
 
-
     @PostMapping("/apply")
     public ResponseEntity<String> applyForJob(@RequestParam("resume") MultipartFile resumeFile,
                                               @RequestParam("userId") Integer userId,
                                               @RequestParam("jobId") Integer jobId) {
-
         return ResponseEntity.ok(applicationsService.applyJob(resumeFile, userId, jobId));
     }
 
@@ -94,6 +92,11 @@ public class JobsController {
     @PostMapping("/blockJob")
     public ResponseEntity<String> blockJob(@RequestParam Integer id) {
         return ResponseEntity.ok(jobsService.blockJob(id));
+    }
+
+    @GetMapping("/exists")
+    public boolean checkIfApplicationExists(@RequestParam Integer jobId, @RequestParam Integer appliedBy) {
+        return applicationsService.checkIfApplicationExists(jobId, appliedBy);
     }
 
 
