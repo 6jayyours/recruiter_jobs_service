@@ -1,8 +1,10 @@
 package com.recruiter.jobs_service.service;
 
 import com.recruiter.jobs_service.feign.AuthClient;
+import com.recruiter.jobs_service.feign.NotificationClient;
 import com.recruiter.jobs_service.model.Applications;
 import com.recruiter.jobs_service.model.Jobs;
+import com.recruiter.jobs_service.model.NotificationMessage;
 import com.recruiter.jobs_service.model.UserDTO;
 import com.recruiter.jobs_service.repository.ApplicationsRepository;
 import com.recruiter.jobs_service.repository.JobsRepository;
@@ -20,15 +22,18 @@ public class ApplicationsService {
     private final JavaMailSender javaMailSender;
     private final AuthClient authClient;
 
+    private final NotificationClient notificationClient;
+
     private final StorageService storageService;
 
     private final ApplicationsRepository applicationsRepository;
 
     private final JobsRepository jobsRepository;
 
-    public ApplicationsService(JavaMailSender javaMailSender, AuthClient authClient, StorageService storageService, ApplicationsRepository applicationsRepository, JobsRepository jobsRepository) {
+    public ApplicationsService(JavaMailSender javaMailSender, AuthClient authClient, NotificationClient notificationClient, StorageService storageService, ApplicationsRepository applicationsRepository, JobsRepository jobsRepository) {
         this.javaMailSender = javaMailSender;
         this.authClient = authClient;
+        this.notificationClient = notificationClient;
         this.storageService = storageService;
         this.applicationsRepository = applicationsRepository;
         this.jobsRepository = jobsRepository;
@@ -67,6 +72,11 @@ public class ApplicationsService {
                     "Best regards,\n" +
                     "RECRUITER";
             sendEmail(to,subject,content);
+            NotificationMessage notificationMessage = new NotificationMessage();
+            notificationMessage.setContent(content);
+            notificationMessage.setEmail(to);
+            notificationMessage.setSubject(subject);
+            notificationClient.sendJsonMessage(notificationMessage);
             return "Application submitted successfully.";
         }catch (Exception e) {
             return "Failed to apply for job: " + e.getMessage();
