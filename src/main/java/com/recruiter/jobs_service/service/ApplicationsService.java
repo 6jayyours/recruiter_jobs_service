@@ -6,6 +6,8 @@ import com.recruiter.jobs_service.model.Jobs;
 import com.recruiter.jobs_service.model.UserDTO;
 import com.recruiter.jobs_service.repository.ApplicationsRepository;
 import com.recruiter.jobs_service.repository.JobsRepository;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,6 +16,8 @@ import java.util.List;
 
 @Service
 public class ApplicationsService {
+
+    private final JavaMailSender javaMailSender;
     private final AuthClient authClient;
 
     private final StorageService storageService;
@@ -22,7 +26,8 @@ public class ApplicationsService {
 
     private final JobsRepository jobsRepository;
 
-    public ApplicationsService(AuthClient authClient, StorageService storageService, ApplicationsRepository applicationsRepository, JobsRepository jobsRepository) {
+    public ApplicationsService(JavaMailSender javaMailSender, AuthClient authClient, StorageService storageService, ApplicationsRepository applicationsRepository, JobsRepository jobsRepository) {
+        this.javaMailSender = javaMailSender;
         this.authClient = authClient;
         this.storageService = storageService;
         this.applicationsRepository = applicationsRepository;
@@ -95,6 +100,11 @@ public class ApplicationsService {
             app.setStatus(status);
             app.setAction("responded");
             applicationsRepository.save(app);
+            UserDTO userDTO = authClient.getUserById(app.getAppliedBy()).getBody();
+            String to =userDTO.getEmail();
+            String subject ="Application Status";
+            String content ="Dear" + userDTO.getFirstName() + " " + userDTO.getLastName() + "\n\nYour application status has been updated. Please log in to check the details.";;
+            sendEmail(to,subject,content);
             return "Status Changed";
         } catch (Exception e) {
             e.printStackTrace();
@@ -108,5 +118,19 @@ public class ApplicationsService {
 
     public Boolean checkApplicationExists(Integer jobId, Integer appliedBy) {
         return applicationsRepository.findApplicationByJobIdAndAppliedBy(jobId, appliedBy);
+    }
+
+    public void sendEmail(String to, String subject, String content) {
+        System.out.println(to+subject+content);
+        try {
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setFrom("marjunramesh@gmail.com");
+            message.setTo(to);
+            message.setSubject(subject);
+            message.setText(content);
+            javaMailSender.send(message);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
