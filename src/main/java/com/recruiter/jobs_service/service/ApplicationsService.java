@@ -56,6 +56,17 @@ public class ApplicationsService {
             application.setAppliedBy(userId);
             application.setAction("applied");
             applicationsRepository.save(application);
+            String to = recruiter.getEmail();
+            String subject ="Job Application";
+            String content = "Hello Recruiter,\n\n" +
+                    "A candidate has applied for the job position. Below are the details:\n\n" +
+                    "Candidate Name: " + applicant.getFirstName() + " " + applicant.getLastName() + "\n" +
+                    "Candidate Email: " + applicant.getEmail() + "\n" +
+                    "Job Title: " + jobs.getJobTitle() + "\n" +
+                    "Please log in to the portal to review the application details.\n\n" +
+                    "Best regards,\n" +
+                    "RECRUITER";
+            sendEmail(to,subject,content);
             return "Application submitted successfully.";
         }catch (Exception e) {
             return "Failed to apply for job: " + e.getMessage();
@@ -103,7 +114,7 @@ public class ApplicationsService {
             UserDTO userDTO = authClient.getUserById(app.getAppliedBy()).getBody();
             String to =userDTO.getEmail();
             String subject ="Application Status";
-            String content ="Dear" + userDTO.getFirstName() + " " + userDTO.getLastName() + "\n\nYour application status has been updated. Please log in to check the details.";;
+            String content ="Dear" + " " + userDTO.getFirstName() + " " + userDTO.getLastName() + "\n\nYour application status has been updated. Please log in to check the details.";
             sendEmail(to,subject,content);
             return "Status Changed";
         } catch (Exception e) {
