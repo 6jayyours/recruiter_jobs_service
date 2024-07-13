@@ -17,5 +17,5 @@ public interface ApplicationsRepository extends JpaRepository<Applications, Inte
     List<Applications> findByJobId(Integer id);
 
     @Query("SELECT CASE WHEN COUNT(a) > 0 THEN TRUE ELSE FALSE END FROM Applications a WHERE a.jobId = :jobId AND a.appliedBy = :appliedBy")
-    boolean findApplicationByJobIdAndAppliedBy(@Param("jobId") Integer jobId, @Param("appliedBy") Integer appliedBy);
+    Boolean findApplicationByJobIdAndAppliedBy(@Param("jobId") Integer jobId, @Param("appliedBy") Integer appliedBy);
 }
