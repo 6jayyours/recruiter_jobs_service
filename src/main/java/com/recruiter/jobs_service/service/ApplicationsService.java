@@ -106,7 +106,7 @@ public class ApplicationsService {
         return applicationsRepository.findByJobId(id);
     }
 
-    public boolean checkIfApplicationExists(Integer jobId, Integer appliedBy) {
-        return applicationsRepository.existsByJobIdAndUserId(jobId, appliedBy);
+    public boolean checkApplicationExists(Integer jobId, Integer appliedBy) {
+        return applicationsRepository.findApplicationByJobIdAndAppliedBy(jobId, appliedBy);
     }
 }

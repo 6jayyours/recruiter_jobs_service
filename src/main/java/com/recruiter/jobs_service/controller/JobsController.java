@@ -95,8 +95,10 @@ public class JobsController {
     }
 
     @GetMapping("/exists")
-    public boolean checkIfApplicationExists(@RequestParam Integer jobId, @RequestParam Integer appliedBy) {
-        return applicationsService.checkIfApplicationExists(jobId, appliedBy);
+    public boolean checkApplicationExists(
+            @RequestParam(value = "jobId", required = true) Integer jobId,
+            @RequestParam(value = "appliedBy", required = true) Integer appliedBy) {
+        return applicationsService.checkApplicationExists(jobId, appliedBy);
     }
 
 
