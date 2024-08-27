@@ -110,7 +110,7 @@ public class JobsService {
         } catch (Exception e) {
             // Handle any specific exceptions or log the error
             e.printStackTrace();
-            throw new RuntimeException("Failed to find jobs");
+            throw new RuntimeException("Failed to find jobs.");
         }
     }
 }
